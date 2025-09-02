@@ -1,12 +1,19 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import PlaceForm from "../components/Places/PlaceForm";
+import { insertPlace } from "../util/db";
 
-function AddPlaces() {
+function AddPlace({ navigation }) {
+
+  async function createPlaceHandler(place) {
+    await insertPlace(place);
+
+    navigation.navigate('AllPlaces');
+  }
   return (
-    <View>
-      <PlaceForm />
-    </View>
+    <ScrollView>
+     <PlaceForm  onCreatePlace={createPlaceHandler}/>
+    </ScrollView>
   )
 }
 
-export default AddPlaces;
+export default AddPlace;

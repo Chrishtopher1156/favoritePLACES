@@ -1,52 +1,42 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AllPlaces from '../screens/AllPlaces';
+import AddPlace from '../screens/AddPlace';
 
-import IconButton from "../components/UI/IconButton";
-import AddPlace from "../screens/AddPlace";
-import AllPlaces from "../screens/AllPlaces";
+import { Colors } from '../constants/Colors';
+import Map from '../screens/Map';
+import PlaceDetails from '../screens/PlaceDetails';
 
-import { Colors } from  '../constants/Colors';
+const BottomTab = createBottomTabNavigator();
 
-const Stack = createNativeStackNavigator();
+function MyStack() {
 
-const Navigation = () => {
   return (
     <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: Colors.primary500},
-            headerTintColor: Colors.primary100,
-            headerShown: true,
-            contentStyle: { backgroundColor: Colors.gray700}
-          }}
-        >
-          <Stack.Screen
-            name="AllPlaces"
-            component={AllPlaces}
-            options={({ navigation }) => ({
-              title: "Your Favorite Places",
-              headerRight: ({ tintColor }) => (
-                <IconButton
-                  icon="plus"
-                  color={tintColor}
-                  size={20}
-                  marginLeft={12}
-                  onPress={() => navigation.navigate('AddPlace')}
-                />
-              ),
-            })}
-          />
-
-          <Stack.Screen 
-            name="AddPlace"
-            component={AddPlace}
-            options={{
-              title: 'Add New Place'
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <BottomTab.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: Colors.primary700 },
+          tabBarStyle: { backgroundColor: Colors.primary500},
+          tabBarActiveTintColor: Colors.accent500,
+          tabBarInactiveTintColor: Colors.primary200,
+          headerTintColor: Colors.primary100,
+        }}
+      >
+      <BottomTab.Screen    
+        name="AllPlaces" 
+        component={AllPlaces}
+        options={{
+          title: "All Placess"
+        }}
+      />
+      <BottomTab.Screen name="AddPlace" component={AddPlace}  />
+      <BottomTab.Screen name='Map' component={Map}/>
+      <BottomTab.Screen name='PlaceDetails' component={PlaceDetails} options={{
+        title: 'Loading Place...'
+      }}/>
+      </BottomTab.Navigator>
+    </NavigationContainer>
   );
 }
 
-export default Navigation;
+export default MyStack;
